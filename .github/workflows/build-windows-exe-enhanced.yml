@@ -1,9 +1,12 @@
-name: build-windows-exe-gui
+name: Build Windows EXE Enhanced
 
 on:
   workflow_dispatch:
   push:
-    branches: [ main, master ]
+    paths:
+      - 'auto_key_gui_enhanced.py'
+      - 'requirements_enhanced.txt'
+      - '.github/workflows/build-windows-exe-enhanced.yml'
 
 jobs:
   build:
@@ -21,15 +24,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pyinstaller
+          pip install -r requirements_enhanced.txt
 
       - name: Build EXE
         run: |
-          pyinstaller --onefile --windowed --name auto_key_gui auto_key_gui.py
+          pyinstaller --onefile --windowed --name auto_key_gui_enhanced auto_key_gui_enhanced.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: auto_key_gui-windows
-          path: dist/auto_key_gui.exe
+          name: auto_key_gui_enhanced_windows
+          path: dist/auto_key_gui_enhanced.exe
